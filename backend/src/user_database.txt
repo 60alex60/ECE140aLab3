@@ -1,0 +1,1 @@
+[{"firstName": "ECE", "lastName": "140A", "email": "ece140a@ucsd.edu", "userName": "admin", "pwd": "password"}, {"firstName": "Testy", "lastName": "Testerson", "email": "test@testing.com", "userName": "testy", "pwd": "test"}]

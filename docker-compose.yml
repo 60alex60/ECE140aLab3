@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - 5001:5001
+    volumes:
+      - ./backend/src:/app
+
+  ui_server:
+    build:
+      context: ./frontend
+    environment:
+      - BACKEND_URL=http://backend:5001
+    ports:
+      - 6543:6543
+    volumes:
+      - ./frontend/src:/app
