@@ -46,10 +46,52 @@ def add_user(req):
 
     return exc.HTTPCreated()    # Code 201
 
+
+def edit_user_form(req):
+    return {}
+
 # Edit a user in the DB
 def edit_user(req):
-    # Add your code here:
-    return {} # Placeholder!
+    req_fields = ["oldUserName","oldPwd","firstName", "lastName", "email", "userName", "pwd"]
+    new_user = req.POST.mixed()
+
+    # Extract the keys from the POSTed data and ensure they match the required fields.
+    if (sorted(req_fields) == sorted(list(new_user.keys()))):
+        found = False
+        users = get_users(req)
+
+        for entry in users:
+            if(entry["userName"] == new_user["oldUserName"] and entry["pwd"] == new_user["oldPwd"]):
+                if(new_user["firstName"] != ""):
+                    entry["firstName"] = new_user["firstName"]
+                if(new_user["lastName"] != ""):
+                    entry["lastName"] = new_user["lastName"]
+                if(new_user["email"] != ""):
+                    entry["email"] = new_user["email"]
+                if(new_user["userName"] != ""):
+                    entry["userName"] = new_user["userName"]
+                if(new_user["pwd"] != ""):
+                    entry["pwd"] = new_user["pwd"]
+                found = True
+                break
+            
+        
+
+        if(found == False):
+            return exc.HTTPBadRequest()
+        
+
+        # Try to write DB to file and catch OSErrors -> system-related error, 
+        # including I/O failures such as “file not found”
+        try:
+            with open(USER_DB_FILE_PATH,'w') as db_file: 
+                json.dump(users, db_file)
+        except OSError:
+            return exc.HTTPInternalServerError()    # Code 500
+    else:
+        return exc.HTTPBadRequest()    # Code 400
+
+    return exc.HTTPCreated()    # Code 201
 
 # Get Tello moves
 def get_tello_moves(req):
@@ -82,6 +124,13 @@ if __name__ == '__main__':
 
     # Add route to edit user (PUT request)
     # NOTE: route must be '/edit_user'
+    config.add_route('edit_user', '/edit_user')
+    config.add_view(edit_user, route_name='edit_user', renderer='json')
+
+    config.add_route('edit_user_form', '/edit_user_form')
+    config.add_view(edit_user_form, route_name='edit_user_form', renderer='json')
+
+
 
     # Add route to get Tello moves
     # NOTE: route must be '/get_tello_moves'

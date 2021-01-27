@@ -14,6 +14,7 @@ FRONTEND_PORT = 6543                     # This is the port number for the front
 #----------------------Helper Functions-------------------------
 def show_home(req):
     return render_to_response('templates/home.html', {}, request=req)
+    
 
 def show_users(req):
     response = requests.get(BACKEND_URL + "/get_users")
@@ -32,13 +33,30 @@ def add_user(req):
     # If POST accepted
     if (response.status_code == 201):
         # Decide what to do with a after adding user!
-        return Response()   # Placeholder!
+        response = requests.get(BACKEND_URL + "/get_users")
+        users = response.json()
+        return render_to_response('templates/users.html', {"users": users}, request=req)
+
     else:
         return Response("Error: Please check your form for correct field names. They MUST match the keys of the DB dictionary!")
 
+
+def edit_user_form(req):
+     return render_to_response('templates/editUser.html', {}, request=req)
+
+
 def edit_user(req):
     # Add loginc to edit user here:
-    return {} # Placeholder!!
+    user = req.POST.mixed()
+    response = requests.post(BACKEND_URL + "/edit_user", data=user)
+    
+    # If POST accepted
+    if (response.status_code == 201):
+        # return home if successful
+        return render_to_response('templates/home.html', {}, request=req)
+
+    else:
+        return Response("Error: Please check your form for correct username and password")
 
 
 if __name__ == '__main__':
@@ -61,9 +79,18 @@ if __name__ == '__main__':
     config.add_route('add_user', '/add_user')
     config.add_view(add_user, route_name='add_user', request_method='POST')
 
+
+    # Route to the form for edit user
+    config.add_route('edit_user_form', '/edit_user_form')
+    config.add_view(edit_user_form, route_name='edit_user_form')
+
+
     # Route to edit a user
-    # Add route to edit user (PUT request)
+    # Add route to edit user (POST request)
     # NOTE: route must be '/edit_user'
+    config.add_route('edit_user', '/edit_user')
+    config.add_view(edit_user, route_name='edit_user')
+
 
     # Route to show moves
     # Add route to show moves (GET request)

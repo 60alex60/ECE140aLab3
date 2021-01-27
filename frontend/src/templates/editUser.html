@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+    <form name="form1" action="/edit_user" method="POST" onsubmit="return required()">
+
+        <label for="oldUserName">Username:</label><br>
+        <input type="text" id="oldUserName" name="oldUserName" placeholder="Enter Username"><br>
+
+        <label for="oldPwd">Password:</label><br>
+        <input type="text" id="oldPwd" name="oldPwd" placeholder="Enter Password"><br><br>
+
+
+        <h1>Updated info (leave blank to keep original)</h1><br>
+
+
+        <label for="firstName">First name:</label><br>
+        <input type="text" id="firstName" name="firstName" placeholder="Enter First Name"><br>
+
+        <label for="lastName">Last name:</label><br>
+        <input type="text" id="lastName" name="lastName" placeholder="Enter Last Name"><br>
+
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email" placeholder="Enter Email"><br>
+
+        <label for="userName">Username:</label><br>
+        <input type="text" id="userName" name="userName" placeholder="Enter Username"><br>
+
+        <label for="pwd">Password:</label><br>
+        <input type="text" id="pwd" name="pwd" placeholder="Enter Password"><br>
+
+        <input type=submit><br>
+    </form>
+
+
+</html>
+
+
+
+<script>
+    function required() {
+        var fn = document.form1.firstNameNew.value;
+        var ln = document.form1.lastNameNew.value;
+        var em = document.form1.emailNew.value;
+        var us = document.form1.userName.value;
+        var pw = document.form1.pwd.value;
+        if (us === "" || ps === "") {
+            alert("Please input username and password");
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+
+</script>
