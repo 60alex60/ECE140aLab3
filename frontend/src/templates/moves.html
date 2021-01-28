@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Moves</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="lab3.css">
+</head>
+
+<body>
+    <h1>Moves</h1>
+
+    <form action="/" method="get">
+        <button>Home</button>
+    </form>
+
+
+
+    <table id="movesTable">
+        <thead>
+            <tr>
+                <th>Pitch</th>
+                <th>Roll</th>
+                <th>Yaw</th>
+                <th>VGX</th>
+                <th>VGY</th>
+                <th>VGZ</th>
+                <th>Temp Low</th>
+                <th>Temp High</th>
+                <th>Time of Flight</th>
+                <th>Height</th>
+                <th>Battery</th>
+                <th>Barometer</th>
+                <th>Time</th>
+                <th>AGX</th>
+                <th>AGY</th>
+                <th>AGZ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for move in moves %}
+            <tr>
+                <td>{{move.pitch}}</td>
+                <td>{{move.roll}}</td>
+                <td>{{move.yaw}}</td>
+                <td>{{move.vgx}}</td>
+                <td>{{move.vgy}}</td>
+                <td>{{move.vgz}}</td>
+                <td>{{move.templ}}</td>
+                <td>{{move.temph}}</td>
+                <td>{{move.tof}}</td>
+                <td>{{move.h}}</td>
+                <td>{{move.bat}}</td>
+                <td>{{move.baro}}</td>
+                <td>{{move.time}}</td>
+                <td>{{move.agx}}</td>
+                <td>{{move.agy}}</td>
+                <td>{{move.agz}}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        
+        var dataURL = "http://localhost:5001/fake_data";
+        
+
+        function showError(err){
+            console.log(err);
+        }
+
+
+    
+
+        
+
+        function fetchFunction(){
+            fetch(dataURL)
+                .then(response => response.json())
+                .then(expandTable)
+                .catch(showError)
+        }
+
+
+
+         function expandTable(data){
+
+           
+            var table = document.getElementById("movesTable");
+            var row = table.insertRow();
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            var cell8 = row.insertCell(7);
+            var cell9 = row.insertCell(8);
+            var cell10 = row.insertCell(9);
+            var cell11 = row.insertCell(10);
+            var cell12 = row.insertCell(11);
+            var cell13 = row.insertCell(12);
+            var cell14 = row.insertCell(13);
+            var cell15 = row.insertCell(14);
+            var cell16 = row.insertCell(15);
+
+            cell1.innerHTML = data.pitch;
+            cell2.innerHTML = data.roll;
+            cell3.innerHTML = data.yaw;
+            cell4.innerHTML = data.vgx;
+            cell5.innerHTML = data.vgy;
+            cell6.innerHTML = data.vgz;
+            cell7.innerHTML = data.templ;
+            cell8.innerHTML = data.temph;
+            cell9.innerHTML = data.tof;
+            cell10.innerHTML = data.h;
+            cell11.innerHTML = data.bat;
+            cell12.innerHTML = data.baro;
+            cell13.innerHTML = data.time;
+            cell14.innerHTML = data.agx;
+            cell15.innerHTML = data.agy;
+            cell16.innerHTML = data.agz;
+        
+
+        }
+
+
+       
+
+
+        var intervalId = window.setInterval(function(){
+            fetchFunction();
+        }, 3000);
+
+  
+
+});
+
+
+   
+</script>

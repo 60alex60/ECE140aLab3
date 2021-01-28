@@ -59,6 +59,18 @@ def edit_user(req):
         return Response("Error: Please check your form for correct username and password")
 
 
+
+def show_moves(req):
+    response = requests.get(BACKEND_URL + "/get_tello_moves")
+
+    # If GET has succeeded
+    if (response.status_code == 200):
+        moves = response.json()
+        return render_to_response('templates/moves.html', {"moves": moves}, request=req)
+    else:
+        return Response(response.text)
+
+
 if __name__ == '__main__':
     config = Configurator()
     config.include('pyramid_jinja2')
@@ -96,6 +108,8 @@ if __name__ == '__main__':
     # Add route to show moves (GET request)
     # NOTE: Use 'show_users' as inspiration
     # NOTE: route must be '/show_moves'
+    config.add_route('show_moves', '/show_moves')
+    config.add_view(show_moves, route_name='show_moves')
 
     #------------------------Add static view (for css)----------
     config.add_static_view(name='/', path='./public', cache_max_age=3600)

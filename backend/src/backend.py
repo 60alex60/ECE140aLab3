@@ -96,7 +96,14 @@ def edit_user(req):
 # Get Tello moves
 def get_tello_moves(req):
     # Add your code here:
-    return {} # Placeholder!
+     # Try to read DB to file and catch OSErrors -> system-related error, 
+    # including I/O failures such as “file not found”
+    try:
+        with open(TELLO_DB_FILE_PATH,'r') as db_file:
+            moves = json.load(db_file)
+    except OSError:
+        return exc.HTTPInternalServerError()    # Code 500
+    return moves
 
 # Return fake tello state data
 def fake_data(req):
@@ -134,6 +141,9 @@ if __name__ == '__main__':
 
     # Add route to get Tello moves
     # NOTE: route must be '/get_tello_moves'
+    config.add_route('get_tello_moves', '/get_tello_moves')
+    config.add_view(get_tello_moves, route_name='get_tello_moves', renderer='json')
+
 
     # Add route to get fake Tello move data
     config.add_route('fake_data', '/fake_data')
