@@ -1,7 +1,22 @@
 <!DOCTYPE html>
 <html>
 
-    <form name="form1" action="/edit_user" method="POST" onsubmit="return required()">
+
+    <head>
+        <title>editUser</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="lab3.css">
+    </head>
+
+    <h1 class="top">Edit User</h1>
+
+    <form action="/" method="get">
+        <button class="center">Home</button>
+    </form>
+
+    <h1 class>Current Username and Password</h1><br>
+
+    <form name="form1" action="/edit_user" method="POST" onsubmit="return required()" >
 
         <label for="oldUserName">Username:</label><br>
         <input type="text" id="oldUserName" name="oldUserName" placeholder="Enter Username"><br>

@@ -1,87 +1,89 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Moves</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="lab3.css">
-</head>
 
-<body>
-    <h1>Moves</h1>
+    <head>
+        <title>Moves</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="lab3.css">
+    </head>
 
-    <form action="/" method="get">
-        <button>Home</button>
-    </form>
+    <body>
+        <h1 class="top">Moves</h1><br>
+
+        <form action="/" method="get">
+            <button class="center">Home</button>
+        </form>
 
 
 
-    <table id="movesTable">
-        <thead>
-            <tr>
-                <th>Pitch</th>
-                <th>Roll</th>
-                <th>Yaw</th>
-                <th>VGX</th>
-                <th>VGY</th>
-                <th>VGZ</th>
-                <th>Temp Low</th>
-                <th>Temp High</th>
-                <th>Time of Flight</th>
-                <th>Height</th>
-                <th>Battery</th>
-                <th>Barometer</th>
-                <th>Time</th>
-                <th>AGX</th>
-                <th>AGY</th>
-                <th>AGZ</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for move in moves %}
-            <tr>
-                <td>{{move.pitch}}</td>
-                <td>{{move.roll}}</td>
-                <td>{{move.yaw}}</td>
-                <td>{{move.vgx}}</td>
-                <td>{{move.vgy}}</td>
-                <td>{{move.vgz}}</td>
-                <td>{{move.templ}}</td>
-                <td>{{move.temph}}</td>
-                <td>{{move.tof}}</td>
-                <td>{{move.h}}</td>
-                <td>{{move.bat}}</td>
-                <td>{{move.baro}}</td>
-                <td>{{move.time}}</td>
-                <td>{{move.agx}}</td>
-                <td>{{move.agy}}</td>
-                <td>{{move.agz}}</td>
+        <table id="movesTable" class="center">
+            <thead>
+                <tr>
+                    <th>Pitch</th>
+                    <th>Roll</th>
+                    <th>Yaw</th>
+                    <th>VGX</th>
+                    <th>VGY</th>
+                    <th>VGZ</th>
+                    <th>Temp Low</th>
+                    <th>Temp High</th>
+                    <th>Time of Flight</th>
+                    <th>Height</th>
+                    <th>Battery</th>
+                    <th>Barometer</th>
+                    <th>Time</th>
+                    <th>AGX</th>
+                    <th>AGY</th>
+                    <th>AGZ</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for move in moves %}
+                <tr>
+                    <td>{{move.pitch}}</td>
+                    <td>{{move.roll}}</td>
+                    <td>{{move.yaw}}</td>
+                    <td>{{move.vgx}}</td>
+                    <td>{{move.vgy}}</td>
+                    <td>{{move.vgz}}</td>
+                    <td>{{move.templ}}</td>
+                    <td>{{move.temph}}</td>
+                    <td>{{move.tof}}</td>
+                    <td>{{move.h}}</td>
+                    <td>{{move.bat}}</td>
+                    <td>{{move.baro}}</td>
+                    <td>{{move.time}}</td>
+                    <td>{{move.agx}}</td>
+                    <td>{{move.agy}}</td>
+                    <td>{{move.agz}}</td>
 
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+
 
 </html>
 
 
 <script>
     document.addEventListener("DOMContentLoaded", (event) => {
-        
-        var dataURL = "http://localhost:5001/fake_data";
-        
 
-        function showError(err){
+        var dataURL = "http://localhost:5001/fake_data";
+
+
+        function showError(err) {
             console.log(err);
         }
 
 
-    
 
-        
 
-        function fetchFunction(){
+
+
+        function fetchFunction() {
             fetch(dataURL)
                 .then(response => response.json())
                 .then(expandTable)
@@ -90,9 +92,9 @@
 
 
 
-         function expandTable(data){
+        function expandTable(data) {
 
-           
+
             var table = document.getElementById("movesTable");
             var row = table.insertRow();
             var cell1 = row.insertCell(0);
@@ -128,22 +130,22 @@
             cell14.innerHTML = data.agx;
             cell15.innerHTML = data.agy;
             cell16.innerHTML = data.agz;
-        
+
 
         }
 
 
-       
 
 
-        var intervalId = window.setInterval(function(){
+
+        var intervalId = window.setInterval(function () {
             fetchFunction();
         }, 3000);
 
-  
-
-});
 
 
-   
+    });
+
+
+
 </script>

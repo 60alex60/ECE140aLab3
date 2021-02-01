@@ -1,2 +1,41 @@
 button.editUser { background:none;border:none;color:blue; }
 
+body {
+    background-color: powderblue;
+    margin: 50px;
+    display: grid;
+    padding: 1rem;
+    border: 1px solid grey;
+    font-family: system-ui;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    margin-bottom: 50px;
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+
+  }
+
+  table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    padding: 15px;
+  }
+  th{
+    font-size: 25px;
+  }
+  
+  .top{
+    font-size: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
